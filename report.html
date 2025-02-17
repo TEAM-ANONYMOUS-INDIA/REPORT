@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live Auto Report</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #fff;
+            color: black;
+            text-align: center;
+            padding: 10px;
+        }
+        .container {
+            max-width: 600px;
+            margin: auto;
+            padding: 15px;
+            background: #f4f4f4;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+        }
+        h1 {
+            color: #ff4444;
+            font-size: 22px;
+        }
+        select, input, button {
+            width: 90%;
+            padding: 8px;
+            margin: 5px 0;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+        button {
+            background: #ff4444;
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        button:hover {
+            background: #cc0000;
+        }
+        .status {
+            margin-top: 15px;
+            font-size: 14px;
+            font-weight: bold;
+            color: green;
+        }
+        .report-btn {
+            background: #007bff;
+            margin-top: 10px;
+        }
+        .report-btn:hover {
+            background: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Live Auto Report System</h1>
+
+    <input type="text" id="username" placeholder="Enter username">
+    
+    <select id="platform">
+        <option value="instagram">Instagram</option>
+        <option value="telegram">Telegram</option>
+        <option value="facebook">Facebook</option>
+        <option value="twitter">Twitter | X</option>
+    </select>
+
+    <button onclick="startReport()">Start Report</button>
+
+    <button class="report-btn" onclick="openReport2()">Report</button>
+
+    <div class="status" id="reportStatus"></div>
+</div>
+
+<script>
+    function startReport() {
+        let username = document.getElementById("username").value.trim();
+        let platform = document.getElementById("platform").value;
+        let statusDiv = document.getElementById("reportStatus");
+
+        if (!username) {
+            statusDiv.innerHTML = "<p style='color: red;'>Enter a valid username.</p>";
+            return;
+        }
+
+        statusDiv.innerHTML = `<p style='color: blue;'>Processing report for <strong>${username}</strong> on ${platform}...</p>`;
+
+        setTimeout(() => {
+            let reportLink;
+            
+            if (platform === "instagram") {
+                reportLink = `https://help.instagram.com/contact/584460464982589?username=${username}`;
+            } else if (platform === "telegram") {
+                reportLink = `https://telegram.org/support?username=${username}`;
+            } else if (platform === "facebook") {
+                reportLink = `https://www.facebook.com/help/contact/634636770043106?username=${username}`;
+            } else if (platform === "twitter") {
+                reportLink = `https://help.twitter.com/forms/dmca?username=${username}`;
+            }
+
+            statusDiv.innerHTML = `<p style='color: green;'>Report ready! Click below to submit:</p>
+            <button onclick="window.open('${reportLink}', '_blank')">Submit Report</button>`;
+        }, 2000);
+    }
+
+    function openReport2() {
+        let username = document.getElementById("username").value.trim();
+        if (!username) {
+            alert("Enter a valid username first.");
+            return;
+        }
+        window.location.href = `report2.html?username=${username}`;
+    }
+</script>
+
+</body>
+</html>
